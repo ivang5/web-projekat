@@ -11,6 +11,10 @@ public class Korisnik {
 	private Uloga uloga;
 	private boolean obrisan;
 	
+	public Korisnik() {
+		super();
+	}
+
 	public Korisnik(int id, String korisnickoIme, String lozinka, Date datumRegistracije, Uloga uloga, boolean obrisan) {
 		super();
 		this.id = id;

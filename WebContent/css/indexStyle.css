@@ -1,0 +1,140 @@
+/*---Firefox Bug Fix --*/
+.carousel-item {
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+body {overflow-x: hidden;}
+
+a { 
+  font-size: 18px;
+  width: max-content;
+}
+
+.onomoje {
+  margin-right: 20px;
+}
+
+/*AUTOCOMPLETE*/
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+  
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+/*AUTOCOMPLETE*/
+
+section{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(
+        #343a40,
+        rgba(105, 151, 176, 0.95)
+      ), #343a40;
+    background-size: cover;
+    background-position: top;
+    width: 100vw;
+    height: 100vh;
+    padding: 75px 150px;
+    text-align: center;
+
+}
+
+#naslov{
+    margin-top: 8vh;
+    color: white;
+    font-weight: 600;
+    font-size: 50px;
+    font-family: 'Roboto', sans-serif;
+    background-color: none;
+    margin-bottom: 10vh;
+}
+
+#pretragaDugme{
+    color: rgba(255, 255, 255, 0.60);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    position: absolute;
+    cursor:pointer;
+    user-select: none;
+}
+
+#pretragaDugme:hover{
+    color: white;
+}
+
+#pretraga{
+    display: none;
+    margin-top: 7vh;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f16268;
+    float: left;
+}
+
+#searchDugme{
+    background-color: #343a40;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+
+.my-custom-scrollbar {
+    float: left;
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+    margin-top: 5vh;
+    }
+.table-wrapper-scroll-y {
+    display: block;
+    }
+
+#tabelaFilmova{
+    background-color: white;
+}
+
+#zaglavljeTabeleFilmova{
+    background: #f16268;
+    color: white;
+}
+
+footer{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background-color: rgba(52, 58, 64);
+    padding: 10px 0;
+    width: 100%;
+}
