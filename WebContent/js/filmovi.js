@@ -22,18 +22,15 @@ $(document).ready(function(){
     
     
     //Tabela
-    var filmInput = $('#filmInput');
-    var datumOdInput = $('#datumOdInput');
-    var vremeOdInput = $('#vremeOdInput');
-    var datumDoInput = $('#datumDoInput');
-    var vremeDoInput = $('vremeDoInput');
-    var salaInput = $('salaInput');
-    var minCenaInput = $('minCenaInput');
-    var maxCenaInput = $('maxCenaInput');
-    var tipProjekcije2D = $('#tipProjekcije2D');
-    var tipProjekcije3D = $('#tipProjekcije3D');
-    var tipProjekcije4D = $('#tipProjekcije4D');
-    
+    var nazivInput = $('#nazivInput');
+    var zanrInput = $('#zanrInput');
+    var trajanjeOdInput = $('#trajanjeOdInput');
+    var trajanjeDoInput = $('#trajanjeDoInput');
+    var distributerInput = $('distributerInput');
+    var zemljaPoreklaInput = $('zemljaPoreklaInput');
+    var godinaOdInput = $('godinaOdInput');
+    var godinaDoInput = $('godinaDoInput');
+
     //Navigacija
     var navigationButtons = $('#navigationButtons');
     var btnOdjava;
@@ -75,7 +72,6 @@ $(document).ready(function(){
 				navigationButtons.append(btnOdjava);
 				return;
 			}
-		
 		});
     }
     

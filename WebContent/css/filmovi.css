@@ -1,10 +1,30 @@
-/*---Firefox Bug Fix --*/
-.carousel-item {
-  transition: -webkit-transform 0.5s ease;
-  transition: transform 0.5s ease;
-  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
+#slika {
+	background-image: url('https://www.trovaweb.net/images/immagini-schede/banner-cinema-trovaweb.jpg');
+	background-size: cover;
+    background-repeat: no-repeat;
+    height:260px;
+}
+
+#blurry {
+    background: rgba(0,0,0,0.5);
+    height:260px;
+}
+
+.margina {
+  margin-right: 20px;
+}
+
+#naslovSlika {
+	text-align: center;
+	padding-top: 50px;
+	font-size: 80px;
+	color: white;
+}
+
+#tekstSlika {
+	text-align: center;
+	font-size: 40px;
+	color: white;
 }
 
 body {overflow-x: hidden;}
@@ -14,41 +34,15 @@ a {
   width: max-content;
 }
 
+#zanrInput{width:185px}
+#trajanjeOdInput{width:125px;}
+#trajanjeDoInput{width:125px;}
+#godinaOdInput{width:115px;}
+#godinaDoInput{width:115px;}
+
 .margina {
   margin-right: 20px;
 }
-
-/*AUTOCOMPLETE*/
-.autocomplete-items {
-    position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /*position the autocomplete items to be the same width as the container:*/
-    top: 100%;
-    left: 0;
-    right: 0;
-}
-  
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
-}
-
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-  background-color: #e9e9e9; 
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
-}
-/*AUTOCOMPLETE*/
 
 section{
     color: white;
@@ -121,11 +115,11 @@ section{
     display: block;
     }
 
-#tabelaProjekcija{
+#tabelaFilmova{
     background-color: white;
 }
 
-#zaglavljeTabeleProjekcija{
+#zaglavljeTabeleFilmova{
     background: #f16268;
     color: white;
 }

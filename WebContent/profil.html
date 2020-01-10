@@ -1,10 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Moj nalog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="css/profil.css" rel="stylesheet">
+	<script src="js/profil.js"></script>
 </head>
 <body>
-
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a id="logoLink" class="navbar-brand" href="index.html"><img src="img/logo.png">   Film Plus</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <ul id="navigationButtons" class="navbar-nav mr-auto">
+        	<li><a class="nav-link" href="filmovi.html">Filmovi</a></li>
+        </ul>
+    </nav>
+    <div class="container" id="myContainer">
+        <ul id="myTabs" class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Nalog</a>
+            </li>
+            <li>
+                <a class="nav-link" data-toggle="tab" href="#profile">Lozinka</a>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="home">
+                <form id="tab">
+                	<div id="userFields">
+                    <label class="myLabelText">Korisničko ime</label>
+                    <input type="text" id="inputUsername" class="form-control margina">
+                    <label class="myLabelText">Datum registracije</label>
+                    <input type="text" id="inputDate" class="form-control margina" readonly>
+                    <label class="myLabelText">Status</label>
+                    <input type="text" id="inputStatus" class="form-control margina" readonly>
+                    </div>
+                    <div id="nalogOperacije">
+                        <button id="btnChangeUser" class="btn btn-primary">Promeni</button>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="profile">
+                <form id="tab2">
+                    <label class="myLabelText">Stara lozinka</label>
+                    <input type="password" id="inputOldPass" class="form-control margina">
+                    <label class="myLabelText">Nova lozinka</label>
+                    <input type="password" id="inputNewPass" class="form-control margina">
+                    <label class="myLabelText">Ponovite novu lozinku</label>
+                    <input type="password" id="inputNewPassRepeat" class="form-control margina">
+                    <div>
+                        <button id="btnChangePass" class="btn btn-primary">Promeni</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <section>
+        <h1 id="naslov">Kupljene karte</h1>
+        <div id="tableScroll" class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table id="tabelaKarata" class="table">
+                <thead id="zaglavljeTabeleKarata">
+                <tr>
+                    <th scope="col" class="text-left">projekcija</th>
+                    <th scope="col" class="text-left">sediste</th>
+                    <th scope="col" class="text-left">datum</th>
+                    <th scope="col" class="text-left">vreme</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+    <footer> 
+        Copyright &copy; 2019 Film Plus
+    </footer>
 </body>
 </html>
