@@ -31,8 +31,8 @@ public class UserServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		String korisnikID = request.getParameter("korisnikID");
-		String korisnickoImeInput = request.getParameter("korisnickoImeInput");
-		String ulogaInput = request.getParameter("ulogaInput");
+		String korisnickoImeFilter = request.getParameter("korisnickoImeFilter");
+		String ulogaFilter = request.getParameter("ulogaFilter");
 			
 		if(action != null && action != "") {
 			
@@ -47,7 +47,7 @@ public class UserServlet extends HttpServlet {
 					break;
 				}case "allUsers" : {
 					if (loggedInUser.getUloga() == Uloga.ADMINISTRATOR) {
-						data.put("allUsers", KorisniciDAO.getAll(korisnickoImeInput, ulogaInput));
+						data.put("allUsers", KorisniciDAO.getAll(korisnickoImeFilter, ulogaFilter));
 						break;
 					}else {
 						request.getRequestDispatcher("./LogoutServlet").forward(request, response);

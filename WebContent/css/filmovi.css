@@ -34,9 +34,9 @@ a {
   width: max-content;
 }
 
-#zanrInput{width:185px}
-#trajanjeOdInput{width:125px;}
-#trajanjeDoInput{width:125px;}
+#zanrInput{width:150px;}
+#trajanjeOdInput{width:120px;}
+#trajanjeDoInput{width:120px;}
 #godinaOdInput{width:115px;}
 #godinaDoInput{width:115px;}
 
@@ -54,10 +54,9 @@ section{
     background-size: cover;
     background-position: top;
     width: 100vw;
-    height: 100vh;
+    height: 105vh;
     padding: 75px 100px;
     text-align: center;
-
 }
 
 #naslov{
@@ -102,7 +101,14 @@ section{
     font-size: 16px;
     cursor: pointer;
     margin-top: 5px;
-  }
+}
+
+#noviFilm {
+	background: #f16268;
+	color: white;
+	font-size: 20px;
+	float: right;
+}
 
 .my-custom-scrollbar {
     float: left;
@@ -110,13 +116,14 @@ section{
     height: 400px;
     overflow: auto;
     margin-top: 5vh;
-    }
+}
+
 .table-wrapper-scroll-y {
     display: block;
-    }
+}
 
 #tabelaFilmova{
-    background-color: white;
+    background-color: #343a40;
 }
 
 #zaglavljeTabeleFilmova{

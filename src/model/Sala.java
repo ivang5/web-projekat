@@ -1,14 +1,15 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Sala {
 
 	private int id;
 	private String naziv;
-	private ArrayList<TipProjekcije> tipovi = new ArrayList<TipProjekcije>();
+	private List<TipProjekcije> tipovi = new ArrayList<TipProjekcije>();
 	
-	public Sala(int id, String naziv, ArrayList<TipProjekcije> tipovi) {
+	public Sala(int id, String naziv, List<TipProjekcije> tipovi) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
@@ -31,11 +32,11 @@ public class Sala {
 		this.naziv = naziv;
 	}
 
-	public ArrayList<TipProjekcije> getTipovi() {
+	public List<TipProjekcije> getTipovi() {
 		return tipovi;
 	}
 
-	public void setTipovi(ArrayList<TipProjekcije> tipovi) {
+	public void setTipovi(List<TipProjekcije> tipovi) {
 		this.tipovi = tipovi;
 	}
 

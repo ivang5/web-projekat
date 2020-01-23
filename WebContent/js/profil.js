@@ -13,7 +13,6 @@ $(document).ready(function(){
     var btnMojNalog;
     var btnKorisnici;
     var btnKupiKartu;
-    var btnProjekcije;
     makeButtons();
     buttonActions();
     changeInterface();
@@ -36,7 +35,6 @@ $(document).ready(function(){
 		           
     	    		  if(data.loggedInUserRole == 'ADMINISTRATOR'){
     	    			  navigationButtons.append(btnKorisnici);
-    	    			  navigationButtons.append(btnProjekcije);
     	    			  navigationButtons.append(btnIzvestavanje);
     	    			  nalogOperacije.append(btnObrisiNalog);
     	    			  labelRole = $('<label class="myLabelText">Uloga</label>');
@@ -110,7 +108,6 @@ $(document).ready(function(){
     	
     	btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
         btnKupiKartu = $('<li id="btnKupiKartu"><a class="nav-link" href="kupovina.html">Kupi kartu</a></li>');
-        btnProjekcije = $('<li id="btnProjekcije"><a class="nav-link" href="projekcije.html">Projekcije</a></li>');
         btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>')
     }
     

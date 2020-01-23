@@ -26,10 +26,15 @@ $(document).ready(function(){
     var zanrInput = $('#zanrInput');
     var trajanjeOdInput = $('#trajanjeOdInput');
     var trajanjeDoInput = $('#trajanjeDoInput');
-    var distributerInput = $('distributerInput');
-    var zemljaPoreklaInput = $('zemljaPoreklaInput');
-    var godinaOdInput = $('godinaOdInput');
-    var godinaDoInput = $('godinaDoInput');
+    var distributerInput = $('#distributerInput');
+    var zemljaPoreklaInput = $('#zemljaPoreklaInput');
+    var godinaOdInput = $('#godinaOdInput');
+    var godinaDoInput = $('#godinaDoInput');
+    
+    var tabelaFilmova = $('#tabelaFilmova');
+    
+    var mySection = $('#mySection');
+    var btnDodajFilm;
 
     //Navigacija
     var navigationButtons = $('#navigationButtons');
@@ -37,10 +42,57 @@ $(document).ready(function(){
     var btnMojNalog;
     var btnKorisnici;
     var btnKupiKartu;
-    var btnProjekcije;
+    var btnIzvestavanje;
     makeButtons();
     changeInterface();
+    getFilmovi();
     
+    
+    function getFilmovi() {
+    	var nazivFilter = nazivInput.val();
+    	var zanrFilter = zanrInput.val();
+    	var trajanjeOdFilter = trajanjeOdInput.val();
+    	var trajanjeDoFilter = trajanjeDoInput.val();
+    	var distributerFilter = distributerInput.val();
+    	var zemljaPoreklaFilter = zemljaPoreklaInput.val();
+    	var godinaOdFilter = godinaOdInput.val();
+    	var godinaDoFilter = godinaDoInput.val();
+    	
+    	var params = {
+    		'nazivFilter' : nazivFilter,
+    		'zanrFilter' : zanrFilter,
+    		'trajanjeOdFilter' : trajanjeOdFilter,
+    		'trajanjeDoFilter' : trajanjeDoFilter,
+    		'distributerFilter' : distributerFilter,
+    		'zemljaPoreklaFilter' : zemljaPoreklaFilter,
+    		'godinaOdFilter' : godinaOdFilter,
+    		'godinaDoFilter' : godinaDoFilter,
+    	};
+    	
+    	console.log(params);
+    	$.get('FilmServlet', params, function(data){
+    		if (data.status == 'success') {
+    			tabelaFilmova.find('tbody').remove();
+    			
+    			var filtriraniFilmovi = data.filtriraniFilmovi;
+    			console.log(data.filtriraniFilmovi);
+    			for(ff in filtriraniFilmovi) {
+    				tabelaFilmova.append(
+						'<tbody>' +
+			                '<tr>' + 
+			                  '<td align="left"><a href="film.html?id=' + filtriraniFilmovi[ff].id + '">' + filtriraniFilmovi[ff].naziv + '</a></td>' + 
+			                  '<td align="left">' + filtriraniFilmovi[ff].zanrovi + '</td>' + 
+			                  '<td align="left">' + filtriraniFilmovi[ff].trajanje + '</td>' +
+			                  '<td align="left">' + filtriraniFilmovi[ff].distributer + '</td>' +
+			                  '<td align="left">' + filtriraniFilmovi[ff].zemljaPorekla + '</td>' +
+			                  '<td align="left">' + filtriraniFilmovi[ff].godinaProizvodnje + '</td>' +
+			                '</tr>' +
+		                '</tbody>'	
+    				)
+    			}
+    		}
+    	});
+    }
     
     function changeInterface() {
 		$.get('UserServlet', {'action': 'loggedInUserRole'}, function(data) {
@@ -50,7 +102,6 @@ $(document).ready(function(){
 				$('#btnMojNalog').remove();
 				$('#btnKorisnici').remove();
 				$('#btnKupiKartu').remove();
-				$('#btnProjekcije').remove();
 				$('#btnRegistracija').show();
 				$('#btnPrijava').show();
 				return;
@@ -65,8 +116,8 @@ $(document).ready(function(){
 				}
 				if(data.loggedInUserRole == 'ADMINISTRATOR'){
 					navigationButtons.append(btnKorisnici);
-					navigationButtons.append(btnProjekcije);
 					navigationButtons.append(btnIzvestavanje);
+					mySection.append(btnDodajFilm);
 				}
 				navigationButtons.append(btnMojNalog);
 				navigationButtons.append(btnOdjava);
@@ -96,18 +147,21 @@ $(document).ready(function(){
     	btnMojNalog = $('<li id="btnMojNalog"><a class="nav-link" href="#">Moj nalog</a></li>').on('click', function(){
             let param = { 'action' : "loggedInUserId"}
             $.get('UserServlet', param, function(data) {
-              if (data.status == 'success') {
-                let url = 'profil.html?id=' + data.loggedInUserId;
-                window.location.replace(url);
-                return;
-              }
+            	if (data.status == 'success') {
+            		let url = 'profil.html?id=' + data.loggedInUserId;
+            		window.location.replace(url);
+            		return;
+            	}
             });
          });
     	
     	btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
         btnKupiKartu = $('<li id="btnKupiKartu"><a class="nav-link" href="kupovina.html">Kupi kartu</a></li>');
-        btnProjekcije = $('<li id="btnProjekcije"><a class="nav-link" href="projekcije.html">Projekcije</a></li>');
-        btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>')
+        btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>');
+        
+        btnDodajFilm = $('<button type="button" id="noviFilm" class="btn btn-light">Dodaj film</button>').on('click', function(){
+        	window.location.replace('dodajFilm.html');
+        });
     }
     
     $('#loginSubmit').on('click', function(event) {
@@ -169,6 +223,69 @@ $(document).ready(function(){
     
         });
 
-    });    
+    });
+    
+    nazivInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    zanrInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    trajanjeOdInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    trajanjeDoInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    distributerInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    zemljaPoreklaInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    godinaOdInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    godinaDoInput.on('change', function(event) {
+		getFilmovi();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    $("#searchDugme").click(function (e){
+    	getFilmovi();
+
+        event.preventDefault();
+        return false;
+    });
     
 });

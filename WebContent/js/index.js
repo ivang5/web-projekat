@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+	
     var clicks = 0;
 
     $("#pretragaDugme").click(function (e) {
@@ -26,13 +26,16 @@ $(document).ready(function(){
     var datumOdInput = $('#datumOdInput');
     var vremeOdInput = $('#vremeOdInput');
     var datumDoInput = $('#datumDoInput');
-    var vremeDoInput = $('vremeDoInput');
-    var salaInput = $('salaInput');
-    var minCenaInput = $('minCenaInput');
-    var maxCenaInput = $('maxCenaInput');
-    var tipProjekcije2D = $('#tipProjekcije2D');
-    var tipProjekcije3D = $('#tipProjekcije3D');
-    var tipProjekcije4D = $('#tipProjekcije4D');
+    var vremeDoInput = $('#vremeDoInput');
+    var salaInput = $('#salaInput');
+    var minCenaInput = $('#minCenaInput');
+    var maxCenaInput = $('#maxCenaInput');
+    var tipProjekcije = $('#tipProjekcije');
+    
+    var tabelaProjekcija = $('#tabelaProjekcija');
+    
+    var mySection = $('#mySection');
+    var btnDodajProjekciju;
     
     //Navigacija
     var navigationButtons = $('#navigationButtons');
@@ -40,9 +43,67 @@ $(document).ready(function(){
     var btnMojNalog;
     var btnKorisnici;
     var btnKupiKartu;
-    var btnProjekcije;
     makeButtons();
     changeInterface();
+    getProjekcije();
+    
+    
+    function getProjekcije() {
+    	var filmFilter = filmInput.val();
+    	var today = new Date();
+    	var dd = String(today.getDate()).padStart(2, '0');
+    	var mm = String(today.getMonth() + 1).padStart(2, '0');
+    	var yyyy = today.getFullYear();
+    	today = yyyy + '-' + mm + '-' + dd;
+    	if(datumOdInput.val() == "" || vremeOdInput.val() == "") {
+    		var datumOdFilter = today + " 00:00:00";
+    	}else {
+    		var datumOdFilter = datumOdInput.val() + " " + vremeOdInput.val() + ":00";
+    	}
+    	if(datumDoInput.val() == "" || vremeDoInput.val() == "") {
+    		var datumDoFilter = today + " 23:59:59";
+    	}else {
+    		var datumDoFilter = datumDoInput.val() + " " + vremeDoInput.val() + ":00";
+    	}
+    	var salaFilter = salaInput.val();
+    	var minCenaFilter = minCenaInput.val();
+    	var maxCenaFilter = maxCenaInput.val();
+    	var tipProjekcijeFilter = tipProjekcije.val();
+    	
+    	var params = {
+    		'filmFilter' : filmFilter,
+    		'datumOdFilter' : datumOdFilter, 
+    		'datumDoFilter' : datumDoFilter,
+    		'salaFilter' : salaFilter,
+    		'minCenaFilter' : minCenaFilter,
+    		'maxCenaFilter' : maxCenaFilter,
+    		'tipProjekcijeFilter' : tipProjekcijeFilter,
+    	};
+    	
+    	console.log(params);
+    	$.get('ProjekcijaServlet', params, function(data){
+    		if (data.status == 'success') {
+    			tabelaProjekcija.find('tbody').remove();
+    			
+    		    var filtriraneProjekcije = data.filtriraneProjekcije;
+    			console.log(data.filtriraneProjekcije);
+    			for(fp in filtriraneProjekcije) {
+    				tabelaProjekcija.append(
+						'<tbody>' +
+			                '<tr>' + 
+			                  '<td align="left"><a href="film.html?id=' + filtriraneProjekcije[fp].film.id + '">' + filtriraneProjekcije[fp].film.naziv + '</a></td>' + 
+			                  '<td align="left"><a href="projekcija.html?id=' + filtriraneProjekcije[fp].id + '">' + dateFormat(new Date(filtriraneProjekcije[fp].datumVreme)) + '</a></td>' + 
+			                  '<td align="left">' + filtriraneProjekcije[fp].tipProjekcije.slice(3,5) + '</td>' +
+			                  '<td align="left">' + filtriraneProjekcije[fp].sala.naziv + '</td>' +
+			                  '<td align="left">' + filtriraneProjekcije[fp].cenaKarte + '</td>' +
+			                '</tr>' +
+		                '</tbody>'		
+    				)
+    			}
+    		}
+    	});
+    }
+    
     
     
     function changeInterface() {
@@ -53,7 +114,6 @@ $(document).ready(function(){
 				$('#btnMojNalog').remove();
 				$('#btnKorisnici').remove();
 				$('#btnKupiKartu').remove();
-				$('#btnProjekcije').remove();
 				$('#btnRegistracija').show();
 				$('#btnPrijava').show();
 				return;
@@ -68,8 +128,8 @@ $(document).ready(function(){
 				}
 				if(data.loggedInUserRole == 'ADMINISTRATOR'){
 					navigationButtons.append(btnKorisnici);
-					navigationButtons.append(btnProjekcije);
 					navigationButtons.append(btnIzvestavanje);
+					mySection.append(btnDodajProjekciju);
 				}
 				navigationButtons.append(btnMojNalog);
 				navigationButtons.append(btnOdjava);
@@ -110,8 +170,11 @@ $(document).ready(function(){
     	
     	btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
         btnKupiKartu = $('<li id="btnKupiKartu"><a class="nav-link" href="kupovina.html">Kupi kartu</a></li>');
-        btnProjekcije = $('<li id="btnProjekcije"><a class="nav-link" href="projekcije.html">Projekcije</a></li>');
-        btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>')
+        btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>');
+        
+        btnDodajProjekciju = $('<button type="button" id="novaProjekcija" class="btn btn-light">Dodaj projekciju</button>').on('click', function(){
+        	window.location.replace('dodajProjekciju.html');
+        });
     }
     
     $('#loginSubmit').on('click', function(event) {
@@ -173,6 +236,67 @@ $(document).ready(function(){
     
         });
 
-    });    
+    });
+    
+    filmInput.on('change', function(event) {
+    	getProjekcije();
+    	
+    	event.preventDefault();
+    	return false;
+    });
+    
+    datumOdInput.on('change', function(event) {
+    	getProjekcije();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    datumDoInput.on('change', function(event) {
+    	getProjekcije();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    salaInput.on('change', function(event) {
+    	getProjekcije();
+    	
+    	event.preventDefault();
+    	return false;
+    });
+    
+    minCenaInput.on('keyup', function(event) {
+    	getProjekcije();
+    	
+    	event.preventDefault();
+    	return false;
+    });
+    
+    minCenaInput.on('keyup', function(event) {
+    	getProjekcije();
+    	
+    	event.preventDefault();
+    	return false;
+    });
+    
+    tipProjekcije.on('change', function(event) {
+    	getProjekcije();
+
+		event.preventDefault();
+		return false;
+    });
+    
+    $("#searchDugme").click(function (e){
+    	getProjekcije();
+
+        event.preventDefault();
+        return false;
+    });
+    
+    function dateFormat(datum){
+        let datumString = datum.getFullYear() + "-" + ("0" + (datum.getMonth() + 1)).slice(-2) + "-" + ("0" + datum.getDate()).slice(-2) + " " + ("0" + datum.getHours()).slice(-2) + ":" + ("0" + datum.getMinutes()).slice(-2)
+        return datumString;
+    }
     
 });

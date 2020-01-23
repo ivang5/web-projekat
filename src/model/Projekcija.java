@@ -13,6 +13,10 @@ public class Projekcija {
 	private Korisnik korisnik;
 	private boolean obrisana;
 	
+	public Projekcija() {
+		super();
+	}
+
 	public Projekcija(int id, Film film, TipProjekcije tipProjekcije, Sala sala, Date datumVreme, double cenaKarte,
 			Korisnik korisnik, boolean obrisana) {
 		super();

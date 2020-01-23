@@ -1,0 +1,68 @@
+html,body {
+ 	background-image: url("https://cdn1.epicgames.com/ue/product/Screenshot/8-1920x1080-11afc89d05a592e80f900c1eaefc73ab.jpg");
+  	background-size: cover;
+  	background-repeat: no-repeat;
+}
+
+#myContainer {
+    background: rgba(0,0,0,0.7);
+    margin-top: 70px;
+    height: 1000px;
+    width: 370px;
+    margin-bottom: 50px;
+}
+
+#cardHeader {
+	font-size: 40px;
+	color: white;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+	margin-top: 20px;
+	float: right;
+}
+
+body {overflow-x: hidden;}
+
+.myLabelText {
+    color: white;
+}
+
+.margina {
+    margin-bottom: 15px;
+    width: 300px;
+}
+
+a { 
+    font-size: 18px;
+    width: max-content;
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+section{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    background-size: cover;
+    background-position: top;
+    width: 100vw;
+    height: 100vh;
+    padding: 75px 100px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background-color: rgba(52, 58, 64);
+    padding: 10px 0;
+    width: 100%;
+}

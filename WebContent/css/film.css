@@ -1,0 +1,68 @@
+html,body {
+ 	background-image: url("https://spheracinema.com/sites/default/files/styles/large_image/public/24011746467_e64060c7f3_o.jpg?itok=zw3GzRy1");
+  	background-size: cover;
+  	background-repeat: no-repeat;
+}
+
+#myContainer {
+    background: rgba(0,0,0,0.7);
+    margin-top: 70px;
+    height: 900px;
+    width: 370px;
+    margin-bottom: 100px;
+}
+
+#cardHeader {
+	font-size: 40px;
+	color: white;
+}
+
+.margina {
+  margin-right: 20px;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+	margin-top: 20px;
+	margin-left: 10px;
+	float: right;
+}
+
+body {overflow-x: hidden;}
+
+.myLabelText {
+    color: white;
+}
+
+a { 
+    font-size: 18px;
+    width: max-content;
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+section{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    background-size: cover;
+    background-position: top;
+    width: 100vw;
+    height: 100vh;
+    padding: 75px 100px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background-color: rgba(52, 58, 64);
+    padding: 10px 0;
+    width: 100%;
+}

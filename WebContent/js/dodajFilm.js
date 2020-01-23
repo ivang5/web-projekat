@@ -1,0 +1,109 @@
+$(document).ready(function(){
+	
+	var navigationButtons = $('#navigationButtons');
+    var btnOdjava;
+    var btnMojNalog;
+    var btnKorisnici;
+    makeButtons();
+    changeInterface();
+    
+    
+    function changeInterface() {
+		$.get('UserServlet', {'action': 'loggedInUserRole'}, function(data) {
+			console.log(data.status);
+			if (data.status == 'unauthenticated') {
+				window.location.replace('index.html');
+				return;
+			}
+		
+			if (data.status == 'success') {
+				console.log(data.loggedInUserRole);
+				if(data.loggedInUserRole == 'KORISNIK'){
+					window.location.replace('index.html');
+				}
+				if(data.loggedInUserRole == 'ADMINISTRATOR'){
+					navigationButtons.append(btnKorisnici);
+					navigationButtons.append(btnIzvestavanje);
+				}
+				navigationButtons.append(btnMojNalog);
+				navigationButtons.append(btnOdjava);
+				return;
+			}
+		});
+    }
+    
+    function makeButtons() {
+    	btnOdjava = $('<li id="btnOdjava"><a class="nav-link" href="">Odjavi se</a></li>').on('click', function() {
+    		$.get('LogoutServlet', function(data) {
+    			console.log(data);
+    			
+    			if (data.status == 'unauthenticated') {
+    				changeInterface();
+    				console.log('Odjavljen');
+    				return;
+    			}else {
+    				console.log("Greska");
+    			}
+    		});
+    		$('input').val('');
+    		location.reload();
+    		return false;
+    	});
+    	
+    	btnMojNalog = $('<li id="btnMojNalog"><a class="nav-link" href="#">Moj nalog</a></li>').on('click', function(){
+            let param = { 'action' : "loggedInUserId"}
+            $.get('UserServlet', param, function(data) {
+            	if (data.status == 'success') {
+            		let url = 'profil.html?id=' + data.loggedInUserId;
+            		window.location.replace(url);
+            		return;
+            	}
+            });
+         });
+    	
+    	btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
+        btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>');
+    }
+    
+    $('#btnDodajFilm').on('click', function(event) {
+    	var inputNaziv = $('#inputNaziv');
+    	var inputReziser = $('#inputReziser');
+    	var inputGlumci = $('#inputGlumci');
+    	var inputZanrovi = $('#inputZanrovi');
+    	var inputTrajanje = $('#inputTrajanje');
+    	var inputDistributer = $('#inputDistributer');
+    	var inputZemljaPorekla = $('#inputZemljaPorekla');
+    	var inputGodinaProizvodnje = $('#inputGodinaProizvodnje');
+    	var inputOpis = $('#inputOpis');
+    	
+    	if($('#inputNaziv').val() == "" || $('#inputTrajanje').val() == "" || $('#inputDistributer').val() == "" || $('inputZemljaPorekla').val() == "" || $('inputGodinaProizvodnje').val() == ""){
+            alert('Niste uneli sve potrebne informacije!');
+            return;
+        }
+    	
+    	var params = {
+    			'action' : "add",
+                'naziv' : inputNaziv.val(),
+                'reziser' : inputReziser.val(),
+                'glumci' : inputGlumci.val(),
+                'zanrovi' : inputZanrovi.val(),
+                'trajanje' : inputTrajanje.val(),
+                'distributer' : inputDistributer.val(),
+                'zemljaPorekla' : inputZemljaPorekla.val(),
+                'godinaProizvodnje' : inputGodinaProizvodnje.val(),
+                'opis' : inputOpis.val(),
+        };
+    	
+    	$.post('FilmServlet', params, function(data){
+            if (data.status == 'success') {
+            	alert('Film je uspesno dodat!');
+            	window.location.replace("filmovi.html");
+            }else{
+                alert("Greska, film nije uspesno dodat!");
+            }
+    
+        });
+    	
+	});
+    
+});
