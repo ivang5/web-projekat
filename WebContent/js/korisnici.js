@@ -32,7 +32,6 @@ $(document).ready(function(){
     var btnOdjava;
     var btnMojNalog;
     var btnKorisnici;
-    var btnKupiKartu;
     var btnProjekcije;
     makeButtons();
     changeInterface();

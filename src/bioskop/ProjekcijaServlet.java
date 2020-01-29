@@ -2,6 +2,7 @@ package bioskop;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.FIlmoviDAO;
+import dao.KarteDAO;
 import dao.KorisniciDAO;
 import dao.ProjekcijeDAO;
 import dao.SaleDAO;
 import model.Film;
+import model.Karta;
 import model.Korisnik;
 import model.Projekcija;
 import model.Sala;
@@ -28,6 +31,23 @@ public class ProjekcijaServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String projekcijaID = request.getParameter("projekcijaID");
+		String proveraZauzetihSedista = request.getParameter("proveraZauzetihSedista");
+		String kartaID = request.getParameter("kartaID");
+		if(proveraZauzetihSedista != null && proveraZauzetihSedista != "") {
+			Map<String, Object> data = new LinkedHashMap<>();
+			List<Integer> zauzetaSedista = new ArrayList<>();
+			List<Karta> Karte = KarteDAO.getAll();
+			for(Karta k : Karte) {
+				if(k.getProjekcija() != null && k.getId() != Integer.parseInt(kartaID) && k.getProjekcija().getId() == Integer.parseInt(projekcijaID)) {
+					zauzetaSedista.add(k.getSediste().getRedniBroj());
+				}
+			}
+			data.put("zauzetaSedista", zauzetaSedista);
+			request.setAttribute("data", data);
+			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
+			return;
+		}
+			
 		if(projekcijaID != null && projekcijaID != "") {
 			Map<String, Object> data = new LinkedHashMap<>();
 			data.put("trazenaProjekcija", ProjekcijeDAO.getById(projekcijaID));
@@ -121,17 +141,17 @@ public class ProjekcijaServlet extends HttpServlet {
 				
 				ProjekcijeDAO.add(projekcija);
 				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
-				break;				
+				break;	
 			} case "delete": {
 				String id = request.getParameter("id");
 				Projekcija projekcija = ProjekcijeDAO.getById(id);
-				projekcija.setObrisana(true);
-				ProjekcijeDAO.update(projekcija);
 				
-				
-				
-				
-				
+				if(KarteDAO.postojanjeProjekcije(id)) {
+					projekcija.setObrisana(true);
+					ProjekcijeDAO.update(projekcija);
+				}else {
+					ProjekcijeDAO.delete(id);
+				}
 				
 				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 				break;

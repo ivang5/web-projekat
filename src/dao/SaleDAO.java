@@ -82,4 +82,46 @@ public class SaleDAO {
 		
 		return null;
 	}
+	
+	public static List<Sala> getAll(String tipProjekcije){
+		List<Sala> sale = new ArrayList<>();
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			
+			String query = "SELECT id, naziv, tipovi "
+					+ "FROM sale WHERE tipovi LIKE ?";
+			
+			int index = 1;
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(index++, "%" + tipProjekcije + "%");
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				index = 1;
+				String salaId = rset.getString(index++);
+				String salaNaziv = rset.getString(index++);
+				List<String> tipoviString = new ArrayList<String>(Arrays.asList(rset.getString(index++).split("\\s*,\\s*")));
+				List<TipProjekcije> salaTipovi = new ArrayList<TipProjekcije>();
+				for(String s: tipoviString) {
+					salaTipovi.add(TipProjekcije.valueOf(s));
+				}
+				
+				Sala sala = new Sala(Integer.parseInt(salaId), salaNaziv, salaTipovi);
+				sale.add(sala);
+			}
+			
+		}catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		
+		return sale;
+	}
 }

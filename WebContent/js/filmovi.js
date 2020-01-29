@@ -41,7 +41,6 @@ $(document).ready(function(){
     var btnOdjava;
     var btnMojNalog;
     var btnKorisnici;
-    var btnKupiKartu;
     var btnIzvestavanje;
     makeButtons();
     changeInterface();
@@ -101,7 +100,6 @@ $(document).ready(function(){
 				$('#btnOdjava').remove();
 				$('#btnMojNalog').remove();
 				$('#btnKorisnici').remove();
-				$('#btnKupiKartu').remove();
 				$('#btnRegistracija').show();
 				$('#btnPrijava').show();
 				return;
@@ -111,9 +109,7 @@ $(document).ready(function(){
 				$('#btnRegistracija').hide();
 				$('#btnPrijava').hide();
 				console.log(data.loggedInUserRole);
-				if(data.loggedInUserRole == 'KORISNIK'){
-					navigationButtons.append(btnKupiKartu);
-				}
+				
 				if(data.loggedInUserRole == 'ADMINISTRATOR'){
 					navigationButtons.append(btnKorisnici);
 					navigationButtons.append(btnIzvestavanje);
@@ -156,7 +152,6 @@ $(document).ready(function(){
          });
     	
     	btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
-        btnKupiKartu = $('<li id="btnKupiKartu"><a class="nav-link" href="kupovina.html">Kupi kartu</a></li>');
         btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>');
         
         btnDodajFilm = $('<button type="button" id="noviFilm" class="btn btn-light">Dodaj film</button>').on('click', function(){
@@ -206,6 +201,8 @@ $(document).ready(function(){
             alert('Unete lozinke nisu iste!');
             return;
         }
+        
+        $.ajaxSetup({async: false});
 
         var params = {
             'userName' : registrationInputUsername.val(),

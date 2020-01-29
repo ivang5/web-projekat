@@ -100,7 +100,8 @@
             <input id="minCenaInput" class="form-control" type="number" min="200" max="1500" placeholder="cena od">
             <input id="maxCenaInput" class="form-control" type="number" min="200" max="1500" placeholder="cena do">
             <select id="tipProjekcije" class="form-control">
-            	<option value="TIP2D" selected>2D</option>
+            	<option value="" selected>Tip projekcije</option>
+            	<option value="TIP2D">2D</option>
             	<option value="TIP3D">3D</option>
             	<option value="TIP4D">4D</option>
             </select>
@@ -114,7 +115,7 @@
                     <th scope="col" class="text-left">datum i vreme</th>
                     <th scope="col" class="text-left">tip projekcije</th>
                     <th scope="col" class="text-left">sala</th>
-                    <th onclick="sortColumn('cena')" scope="col" class="text-left">cena</th>
+                    <th scope="col" class="text-left">cena</th>
                 </tr>
                 </thead>
             </table>

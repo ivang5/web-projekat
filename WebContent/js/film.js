@@ -7,7 +7,6 @@ $(document).ready(function(){
 	
     var filmButtons = $('#filmButtons');
     var btnIzmeniFilm;
-    var btnObrisiFilm;
     var btnKupiKartu;
     
 	//Navigacija
@@ -15,7 +14,6 @@ $(document).ready(function(){
     var btnOdjava;
     var btnMojNalog;
     var btnKorisnici;
-    var btnKupiKartu;
     var btnIzvestavanje;
     makeButtons();
     changeInterface();
@@ -31,8 +29,8 @@ $(document).ready(function(){
 	    		  $('#btnOdjava').remove();
 	    		  $('#btnMojNalog').remove();
 	    		  $('#btnKorisnici').remove();
-	    		  $('#btnKupiKartu').remove();
 	    		  $('#btnIzvestavanje').remove();
+	    		  $('#btnObrisiFilm').remove();
 	    		  
 	    		  document.getElementById('inputNaziv').readOnly = true;
 	    		  document.getElementById('inputReziser').readOnly = true; 
@@ -53,8 +51,8 @@ $(document).ready(function(){
 	    		  $('#btnRegistracija').hide();
 	    		  $('#btnPrijava').hide();
 	    		  if(data.loggedInUserRole == 'KORISNIK'){
-	    			  navigationButtons.append(btnKupiKartu);
 	    			  filmButtons.append(btnKupiKartu);
+	    			  $('#btnObrisiFilm').remove();
 	    			  
 		    		  document.getElementById('inputNaziv').readOnly = true;
 		    		  document.getElementById('inputReziser').readOnly = true; 
@@ -143,6 +141,8 @@ $(document).ready(function(){
 	    			alert("Godina proizvodnje filma mora biti pozitivan broj!")
 	    			return false;
 	    		}
+	    		
+	    		$.ajaxSetup({async: false});
 				
 				var params = {
 					'action' : "update",
@@ -170,27 +170,11 @@ $(document).ready(function(){
 	    	}
 	    });
 	    
-	    btnObrisiFilm = $('<button class="btn btn-danger">Obrisi film</button>').on('click', function(){
-			if(loggedInUserRole == 'ADMINISTRATOR'){
-	            var params = {
-	        	    'id': filmID,
-	                'action' : "delete"
-	            };
-	            $.post('FilmServlet', params, function(data){
-	                if (data.status == 'success') {
-  		            	alert("Film izbrisan");
-  		                window.location.replace("filmovi.html");
-	                }else{
-	                	alert("Operacija neuspesna!");
-	                }
-	            });
-			}
-			
-        });
-	    
 	    btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
 	    btnKupiKartu = $('<button type="button" id="btnKupiKartu" class="btn btn-success">Kupi kartu</button>').on('click', function(){
-        	window.location.replace('kupovina.html');
+	    	let url = 'odabirProjekcije.html?id=' + filmID;
+        	window.location.replace(url);
+        	return;
         });
 	    btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>');
     }
@@ -223,6 +207,23 @@ $(document).ready(function(){
         });
 
     }
+    
+    $('#btnPotvrdiBrisanje').on('click', function(){
+    	if(loggedInUserRole == 'ADMINISTRATOR'){
+            var params = {
+        	    'id': filmID,
+                'action' : "delete"
+            };
+            $.post('FilmServlet', params, function(data){
+                if (data.status == 'success') {
+	            	alert("Film izbrisan");
+	                window.location.replace("filmovi.html");
+                }else{
+                	alert("Operacija neuspesna!");
+                }
+            });
+		}
+    });
     
     $('#loginSubmit').on('click', function(event) {
     	var loginInputUsername = $('#loginInputUsername');
@@ -267,6 +268,8 @@ $(document).ready(function(){
             return;
         }
 
+        $.ajaxSetup({async: false});
+        
         var params = {
             'userName' : registrationInputUsername.val(),
             'password' : registrationInputPassword.val(),

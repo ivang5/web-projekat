@@ -4,19 +4,23 @@ $(document).ready(function(){
     var KORISNIK;
     var loggedInUserRole;
     var loggedInUserId;
+    
+    var cbRole;
+    
+    var tabelaKarata = $('#tabelaKarata');
 	
     //Navigacija
     var navigationButtons = $('#navigationButtons');
     var nalogOperacije = $('#nalogOperacije');
-    var btnObrisiNalog;
     var btnOdjava;
     var btnMojNalog;
     var btnKorisnici;
-    var btnKupiKartu;
+    
     makeButtons();
     buttonActions();
     changeInterface();
     getUser();
+    getKarte();
     
     
     function changeInterface() {
@@ -29,16 +33,17 @@ $(document).ready(function(){
 
     	    	  if (data.status == 'success') {
     	    		  console.log(data.loggedInUserRole);
-    	    		  if(data.loggedInUserRole == 'KORISNIK'){
-    	    			  navigationButtons.append(btnKupiKartu);
-    	    		  }
 		           
+    	    		  if(data.loggedInUserRole == 'KORISNIK'){
+    	    			  $('#btnObrisiNalog').remove();
+    	    		  }
+    	    		  
     	    		  if(data.loggedInUserRole == 'ADMINISTRATOR'){
     	    			  navigationButtons.append(btnKorisnici);
     	    			  navigationButtons.append(btnIzvestavanje);
-    	    			  nalogOperacije.append(btnObrisiNalog);
+    	    			  $('#btnObrisiNalog').show();
     	    			  labelRole = $('<label class="myLabelText">Uloga</label>');
-    	    			  cbRole = $('<select class="form-control md-form"" id="cbRole"><option value="none" selected disabled hidden>Izaberite ulogu</option><option value="ADMINISTRATOR">Administrator</option><option value="KORISNIK">Korisnik</option></select>');
+    	    			  cbRole = $('<select class="form-control md-form"" id="cbRole"><option value="ADMINISTRATOR">Administrator</option><option value="KORISNIK">Korisnik</option></select>');
     	    			  $('#userFields').append(labelRole);
     	    			  $('#userFields').append(cbRole);
     	    		  }    	    		    
@@ -79,35 +84,7 @@ $(document).ready(function(){
             });
          });
     	
-    	btnObrisiNalog = $('<button class="btn btn-danger">Obrisi nalog</button>').on('click', function(){
-    		$.get('UserServlet', {'action' : 'loggedInUserId'}, function(data){
-    			loggedInUserId = data.loggedInUserId;
-    			if(korisnikID == loggedInUserId){
-        			alert("Greska! Ne mozete izbrisati svoj nalog!")
-        			let url = 'profil.html?id=' + data.loggedInUserId;
-            		window.location.replace(url);
-            		return;
-        		}
-    			if(loggedInUserRole == 'ADMINISTRATOR'){
-  		            var params = {
-  		        	    'id': korisnikID,
-  		                'action' : "delete"
-  		            };
-  		            $.post('UserServlet', params, function(data){
-  		                if (data.status == 'success') {
-	  		            	alert("Korisnik izbrisan");
-	  		                window.location.replace("korisnici.html");
-  		                }else{
-  		                	alert("Operacija neuspesna!");
-  		                }
-  		            });
-    			}
-    		});
-			
-        });
-    	
     	btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
-        btnKupiKartu = $('<li id="btnKupiKartu"><a class="nav-link" href="kupovina.html">Kupi kartu</a></li>');
         btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>')
     }
     
@@ -118,6 +95,8 @@ $(document).ready(function(){
     			alert("Korisnicko ime mora da sadrzi minimum 3 karaktera!")
     			return false;
     		}
+    		
+    		$.ajaxSetup({async: false});
     		
 			let uloga = $('#cbRole').val();
 			var params = {
@@ -159,10 +138,13 @@ $(document).ready(function(){
 				return;
 			}
     		
+    		$.ajaxSetup({async: false});
+    		
     		var params = {
     				'action' : "update",
     				'id' : korisnikID,
     				'lozinka' : $('#inputNewPass').val(),
+    				'staraLozinka' : $('#inputOldPass').val(),
     				'uloga' : loggedInUserRole
     		};
     		
@@ -188,6 +170,31 @@ $(document).ready(function(){
     	});
     }
     
+    $('#btnPotvrdiBrisanje').on('click', function(){
+    	$.get('UserServlet', {'action' : 'loggedInUserId'}, function(data){
+			loggedInUserId = data.loggedInUserId;
+			if(korisnikID == loggedInUserId){
+    			alert("Greska! Ne mozete izbrisati svoj nalog!")
+    			let url = 'profil.html?id=' + data.loggedInUserId;
+        		window.location.replace(url);
+        		return;
+    		}
+			if(loggedInUserRole == 'ADMINISTRATOR'){
+	            var params = {
+	        	    'id': korisnikID,
+	                'action' : "delete"
+	            };
+	            $.post('UserServlet', params, function(data){
+	                if (data.status == 'success') {
+	            	alert("Korisnik izbrisan");
+	                window.location.replace("korisnici.html");
+	                }else{
+	                	alert("Operacija neuspesna!");
+	                }
+	            });
+			}
+		});
+    });
     
     function getUser(){
 
@@ -208,13 +215,39 @@ $(document).ready(function(){
                 } else {
                 	$('#inputStatus').val("aktivan").trigger("change");
                 }
-                
+                if(loggedInUserRole == 'ADMINISTRATOR'){
+                	cbRole.val(KORISNIK.uloga).trigger("change");
+                    console.log(cbRole.val);
+                }         
             }
 
         });
 
     }
     
+    function getKarte(){
+    	var params = {
+    		'korisnikID' : korisnikID
+    	};
+    	
+    	$.get('KartaServlet', params, function(data){
+    		if (data.status == 'success') {
+    			tabelaKarata.find('tbody').remove();
+    			
+    		    var filtriraneKarte = data.filtriraneKarte;
+    			console.log(data.filtriraneKarte);
+    			for(fk in filtriraneKarte) {
+    				tabelaKarata.append(
+						'<tbody>' +
+			                '<tr>' + 
+			                  '<td align="left"><a href="karta.html?id=' + filtriraneKarte[fk].id + '">' + dateFormat(new Date(filtriraneKarte[fk].datumVremeProdaje)) + '</a></td>' + 
+			                '</tr>' +
+		                '</tbody>'		
+    				)
+    			}
+    		}
+    	});
+    }
     
     function dateFormat(datum){
         let datumString = datum.getFullYear() + "-" + ("0" + (datum.getMonth() + 1)).slice(-2) + "-" + ("0" + datum.getDate()).slice(-2) + " " + ("0" + datum.getHours()).slice(-2) + ":" + ("0" + datum.getMinutes()).slice(-2) + ":" + ("0" + datum.getSeconds()).slice(-2)

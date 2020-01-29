@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.FIlmoviDAO;
 import dao.KorisniciDAO;
+import dao.ProjekcijeDAO;
 import model.Film;
 import model.Korisnik;
 import model.Uloga;
@@ -144,13 +145,13 @@ public class FilmServlet extends HttpServlet {
 			} case "delete": {
 				String id = request.getParameter("id");
 				Film film = FIlmoviDAO.getById(id);
-				film.setObrisan(true);
-				FIlmoviDAO.update(film);
 				
-				
-				
-				
-				
+				if(ProjekcijeDAO.postojanjeFilma(id)) {
+					film.setObrisan(true);
+					FIlmoviDAO.update(film);
+				}else {
+					FIlmoviDAO.delete(id);
+				}
 				
 				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 				break;

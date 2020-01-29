@@ -131,13 +131,17 @@ public class KorisniciDAO {
 		
 		try {
 			
-			String query = "SELECT id, korisnickoIme, lozinka, datumRegistracije, obrisan "
-					+ "FROM korisnici WHERE korisnickoIme LIKE ? AND uloga = ? AND obrisan = ?";
+			String query = "SELECT id, korisnickoIme, lozinka, datumRegistracije, uloga, obrisan "
+					+ "FROM korisnici WHERE korisnickoIme LIKE ? AND uloga LIKE ? AND obrisan = ?";
 			
 			int index = 1;
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(index++, "%" + korisnickoIme + "%");
-			pstmt.setString(index++, uloga);
+			if(uloga == "") {
+				pstmt.setString(index++, "%" + "%");
+			}else {
+				pstmt.setString(index++, uloga);
+			}
 			pstmt.setInt(index++, 0);
 			rset = pstmt.executeQuery();
 			
@@ -147,9 +151,10 @@ public class KorisniciDAO {
 				String korIme = rset.getString(index++);
 				String lozinka = rset.getString(index++);
 				Date datumRegistracije = rset.getTimestamp(index++);
+				Uloga korUloga = Uloga.valueOf(rset.getString(index++));
 				boolean obrisan = rset.getBoolean(index++);
 				
-				Korisnik korisnik = new Korisnik(id, korIme, lozinka, datumRegistracije, Uloga.valueOf(uloga), obrisan);
+				Korisnik korisnik = new Korisnik(id, korIme, lozinka, datumRegistracije, korUloga, obrisan);
 				korisnici.add(korisnik);
 			}
 			

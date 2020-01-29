@@ -42,7 +42,6 @@ $(document).ready(function(){
     var btnOdjava;
     var btnMojNalog;
     var btnKorisnici;
-    var btnKupiKartu;
     makeButtons();
     changeInterface();
     getProjekcije();
@@ -57,13 +56,21 @@ $(document).ready(function(){
     	today = yyyy + '-' + mm + '-' + dd;
     	if(datumOdInput.val() == "" || vremeOdInput.val() == "") {
     		var datumOdFilter = today + " 00:00:00";
+    		var datOd = new Date(datumOdFilter);
+    		var datOdMS = datOd.getTime();
     	}else {
     		var datumOdFilter = datumOdInput.val() + " " + vremeOdInput.val() + ":00";
+    		var datOd = new Date(datumOdFilter);
+    		var datOdMS = datOd.getTime();
     	}
     	if(datumDoInput.val() == "" || vremeDoInput.val() == "") {
     		var datumDoFilter = today + " 23:59:59";
+    		var datDo = new Date(datumDoFilter);
+    		var datDoMS = datDo.getTime();
     	}else {
     		var datumDoFilter = datumDoInput.val() + " " + vremeDoInput.val() + ":00";
+    		var datDo = new Date(datumDoFilter);
+    		var datDoMS = datDo.getTime();
     	}
     	var salaFilter = salaInput.val();
     	var minCenaFilter = minCenaInput.val();
@@ -72,13 +79,17 @@ $(document).ready(function(){
     	
     	var params = {
     		'filmFilter' : filmFilter,
-    		'datumOdFilter' : datumOdFilter, 
-    		'datumDoFilter' : datumDoFilter,
+    		'datumOdFilter' : datOdMS,
+    		'datumDoFilter' : datDoMS,
     		'salaFilter' : salaFilter,
     		'minCenaFilter' : minCenaFilter,
     		'maxCenaFilter' : maxCenaFilter,
     		'tipProjekcijeFilter' : tipProjekcijeFilter,
     	};
+    	
+    	var probaDatum = new Date("11/21/1987 16:00:00");
+    	var probaMS = probaDatum.getTime();
+    	console.log(probaMS);
     	
     	console.log(params);
     	$.get('ProjekcijaServlet', params, function(data){
@@ -113,7 +124,6 @@ $(document).ready(function(){
 				$('#btnOdjava').remove();
 				$('#btnMojNalog').remove();
 				$('#btnKorisnici').remove();
-				$('#btnKupiKartu').remove();
 				$('#btnRegistracija').show();
 				$('#btnPrijava').show();
 				return;
@@ -123,9 +133,7 @@ $(document).ready(function(){
 				$('#btnRegistracija').hide();
 				$('#btnPrijava').hide();
 				console.log(data.loggedInUserRole);
-				if(data.loggedInUserRole == 'KORISNIK'){
-					navigationButtons.append(btnKupiKartu);
-				}
+				
 				if(data.loggedInUserRole == 'ADMINISTRATOR'){
 					navigationButtons.append(btnKorisnici);
 					navigationButtons.append(btnIzvestavanje);
@@ -169,7 +177,6 @@ $(document).ready(function(){
          });
     	
     	btnKorisnici = $('<li id="btnKorisnici"><a class="nav-link" href="korisnici.html">Korisnici</a></li>');
-        btnKupiKartu = $('<li id="btnKupiKartu"><a class="nav-link" href="kupovina.html">Kupi kartu</a></li>');
         btnIzvestavanje = $('<li id="btnIzvestavanje"><a class="nav-link" href="izvestavanje.html">Izvestavanje</a></li>');
         
         btnDodajProjekciju = $('<button type="button" id="novaProjekcija" class="btn btn-light">Dodaj projekciju</button>').on('click', function(){
@@ -219,6 +226,8 @@ $(document).ready(function(){
             alert('Unete lozinke nisu iste!');
             return;
         }
+        
+        $.ajaxSetup({async: false});
 
         var params = {
             'userName' : registrationInputUsername.val(),

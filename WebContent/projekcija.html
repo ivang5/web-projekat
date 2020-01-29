@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Film</title>
+    <title>Projekcija</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <link href="css/film.css" rel="stylesheet">
-    <script src="js/film.js"></script>
+    <link href="css/projekcija.css" rel="stylesheet">
+    <script src="js/projekcija.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
@@ -64,33 +64,25 @@
     </nav>
 	<div class="container" id="myContainer">
 		<div class="card-header">
-			<h3 id="cardHeader">Film</h3>
+			<h3 id="cardHeader">Projekcija</h3>
 		</div>	
 		<div class="card-body">
 			<form>
 				<div id="userFields">
-                   <label class="myLabelText">Naziv filma</label>
-                   <input type="text" id="inputNaziv" class="form-control margina">
-                   <label class="myLabelText">Reziser</label>
-                   <input type="text" id="inputReziser" class="form-control margina">
-                   <label class="myLabelText">Glumci</label>
-                   <input type="text" id="inputGlumci" class="form-control margina">
-                   <label class="myLabelText">Zanrovi</label>
-                   <input type="text" id="inputZanrovi" class="form-control margina">
-                   <label class="myLabelText">Trajanje</label>
-                   <input type="number" min="1" max="5" id="inputTrajanje" class="form-control margina">
-                   <label class="myLabelText">Distributer</label>
-                   <input type="text" id="inputDistributer" class="form-control margina">
-                   <label class="myLabelText">Zemlja Porekla</label>
-                   <input type="text" id="inputZemljaPorekla" class="form-control margina">
-                   <label class="myLabelText">Godina proizvodnje</label>
-                   <input type="number" min="1900" max="2020" id="inputGodinaProizvodnje" class="form-control margina">
-                   <label class="myLabelText">Opis</label>
-                   <textarea class="form-control" id="inputOpis" rows="4"></textarea>
+                   <label class="myLabelText">Film</label>
+                   <input type="text" id="inputFilm" class="form-control margina" readonly>
+                   <label class="myLabelText">Datum i vreme</label>
+                   <input type="text" id="inputDatumVreme" class="form-control margina" readonly>
+                   <label class="myLabelText">Tip projekcije</label>
+                   <input type="text" id="inputTipProjekcije" class="form-control margina" readonly>
+                   <label class="myLabelText">Sala</label>
+                   <input type="text" id="inputSala" class="form-control margina" readonly>
+                   <label class="myLabelText">Cena</label>
+                   <input type="number" min="200" max="1500" id="inputCena" class="form-control margina" readonly>
                    </div>
-                   <div id="filmButtons">
-                       <button type="button" class="btn btn-danger" id="btnObrisiFilm" data-toggle="modal" data-target="#staticBackdrop">
-							Obriši film
+                   <div id="projekcijaButtons">
+                       	<button type="button" class="btn btn-danger" id="btnObrisiProjekciju" data-toggle="modal" data-target="#staticBackdrop">
+							Obriši projekciju
 						</button>
                    </div>
 			</form>
@@ -100,13 +92,13 @@
 		<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
 	      		<div class="modal-header">
-	        		<h5 class="modal-title" id="staticBackdropLabel">Brisanje filma</h5>
+	        		<h5 class="modal-title" id="staticBackdropLabel">Brisanje projekcije</h5>
 	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          			<span aria-hidden="true">&times;</span>
 	        		</button>
 	      		</div>
 	      		<div class="modal-body">
-	        		Da li ste sigurni da želite da obrišete film?
+	        		Da li ste sigurni da želite da obrišete projekciju?
 	      		</div>
 	      		<div class="modal-footer">
 	        		<button type="button" class="btn btn-primary" data-dismiss="modal">Otkaži</button>

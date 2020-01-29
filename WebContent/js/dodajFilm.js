@@ -81,6 +81,8 @@ $(document).ready(function(){
             return;
         }
     	
+    	$.ajaxSetup({async: false});
+    	
     	var params = {
     			'action' : "add",
                 'naziv' : inputNaziv.val(),

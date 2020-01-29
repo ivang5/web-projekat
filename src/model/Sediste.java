@@ -2,13 +2,23 @@ package model;
 
 public class Sediste {
 
+	private int id;
 	private int redniBroj;
 	private Sala sala;
 	
-	public Sediste(int redniBroj, Sala sala) {
+	public Sediste(int id, int redniBroj, Sala sala) {
 		super();
+		this.id = id;
 		this.redniBroj = redniBroj;
 		this.sala = sala;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getRedniBroj() {

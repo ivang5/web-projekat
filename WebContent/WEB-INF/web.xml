@@ -122,4 +122,34 @@
     <servlet-name>ProjekcijaServlet</servlet-name>
     <url-pattern>/ProjekcijaServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SalaServlet</display-name>
+    <servlet-name>SalaServlet</servlet-name>
+    <servlet-class>bioskop.SalaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SalaServlet</servlet-name>
+    <url-pattern>/SalaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>KartaServlet</display-name>
+    <servlet-name>KartaServlet</servlet-name>
+    <servlet-class>bioskop.KartaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KartaServlet</servlet-name>
+    <url-pattern>/KartaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SedisteServlet</display-name>
+    <servlet-name>SedisteServlet</servlet-name>
+    <servlet-class>bioskop.SedisteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SedisteServlet</servlet-name>
+    <url-pattern>/SedisteServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

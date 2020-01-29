@@ -10,6 +10,10 @@ public class Karta {
 	private Date datumVremeProdaje;
 	private Korisnik korisnik;
 	
+	public Karta() {
+		super();
+	}
+
 	public Karta(int id, Projekcija projekcija, Sediste sediste, Date datumVremeProdaje, Korisnik korisnik) {
 		super();
 		this.id = id;

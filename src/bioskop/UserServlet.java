@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.KarteDAO;
 import dao.KorisniciDAO;
 import model.Korisnik;
 import model.Uloga;
@@ -113,8 +114,15 @@ public class UserServlet extends HttpServlet {
 				if(korisnickoIme != null && korisnickoIme != "")
 					korisnik.setKorisnickoIme(korisnickoIme);
 				String lozinka = request.getParameter("lozinka");
-				if(lozinka != null && lozinka != "")
-					korisnik.setLozinka(lozinka);
+				if(lozinka != null && lozinka != "") {
+					String staraLozinka = request.getParameter("staraLozinka");
+					if(staraLozinka.equals(korisnik.getLozinka())) {
+						korisnik.setLozinka(lozinka);
+					}else {
+						request.getRequestDispatcher("./FailureServlet").forward(request, response);
+						return;
+					}
+				}
 				Uloga uloga = Uloga.valueOf(request.getParameter("uloga"));
 				korisnik.setUloga(uloga);
 				KorisniciDAO.update(korisnik);
@@ -127,13 +135,13 @@ public class UserServlet extends HttpServlet {
 				}
 				String id = request.getParameter("id");
 				Korisnik korisnik = KorisniciDAO.getById(id);
-				korisnik.setObrisan(true);
-				KorisniciDAO.update(korisnik);
-
 				
-				
-				
-				
+				if(KarteDAO.postojanjeKorisnika(id)) {
+					korisnik.setObrisan(true);
+					KorisniciDAO.update(korisnik);
+				}else {
+					KorisniciDAO.delete(id);
+				}
 				
 				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 				break;

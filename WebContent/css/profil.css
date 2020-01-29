@@ -36,7 +36,7 @@ a:hover {
 
 section{
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     background-size: cover;
     background-position: top;
     width: 100vw;
@@ -50,7 +50,7 @@ section{
     color: white;
     font-weight: 600;
     font-size: 50px;
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     background-color: none;
     margin-bottom: 10vh;
 }
@@ -67,7 +67,7 @@ section{
     }
 
 #tabelaKarata{
-    background-color: white;
+    background-color: #343a40;
 }
 
 #zaglavljeTabeleKarata{
@@ -77,9 +77,9 @@ section{
 
 footer {
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     color: white;
     background-color: rgba(52, 58, 64);
-    padding: 10px 0;
+    padding: 10px;
     width: 100%;
 }

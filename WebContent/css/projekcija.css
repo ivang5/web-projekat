@@ -1,20 +1,24 @@
 html,body {
- 	background-image: url("https://cdn1.epicgames.com/ue/product/Screenshot/5-1920x1080-249c61590f2b145d0e3cfbcd9b833cab.jpg");
+ 	background-image: url("https://spheracinema.com/sites/default/files/styles/large_image/public/38876447191_9d2ac04578_o.jpg?itok=qXPaVs7Q");
   	background-size: cover;
   	background-repeat: no-repeat;
 }
 
 #myContainer {
     background: rgba(0,0,0,0.7);
-    margin-top: 100px;
-    height: 700px;
+    margin-top: 70px;
+    height: 600px;
     width: 370px;
-    margin-bottom: 50px;
+    margin-bottom: 200px;
 }
 
 #cardHeader {
 	font-size: 40px;
 	color: white;
+}
+
+.margina {
+  margin-right: 20px;
 }
 
 textarea {
@@ -23,6 +27,7 @@ textarea {
 
 button {
 	margin-top: 20px;
+	margin-left: 10px;
 	float: right;
 }
 
@@ -30,11 +35,6 @@ body {overflow-x: hidden;}
 
 .myLabelText {
     color: white;
-}
-
-.margina {
-    margin-bottom: 15px;
-    width: 300px;
 }
 
 a { 

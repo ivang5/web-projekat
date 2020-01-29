@@ -1,0 +1,111 @@
+.margina {
+  margin-right: 20px;
+}
+
+button {
+	margin-top: 20px;
+	margin-left: 10px;
+	float: right;
+}
+
+body {overflow-x: hidden;}
+
+a { 
+    font-size: 18px;
+    width: max-content;
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+section {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    background-image: url("https://www.theicescreen.com/images/confort2.jpg?crc=4122929556");
+    background-size: cover;
+    background-position: top;
+    width: 100vw;
+    height: 110vh;
+    padding: 75px 100px;
+    text-align: center;
+}
+
+#myContainer {
+    background: rgba(0,0,0,0.5);
+    margin-top: 70px;
+    height: 220px;
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+#naslov {
+    margin-top: 8vh;
+    color: white;
+    font-weight: 600;
+    font-size: 50px;
+    font-family: 'Roboto', sans-serif;
+    background-color: none;
+    margin-bottom: 10vh;
+}
+
+#podnaslov {
+    margin-top: 5vh;
+    color: white;
+    font-weight: 500;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+    background-color: none;
+    margin-bottom: 8vh;
+}
+
+#filmLink {
+	font-size: 35px;
+}
+
+#nastaviKupovinu {
+	background: #f16268;
+	color: white;
+	font-size: 20px;
+	float: right;
+}
+
+.my-custom-scrollbar {
+    float: left;
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+    margin-top: 5vh;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+#tabelaProjekcija{
+    background-color: #343a40;
+}
+
+#zaglavljeTabeleProjekcija{
+    background: #f16268;
+    color: white;
+}
+
+.clickable-row:hover{
+    background-color: #8ab3f4;
+}
+
+.selectedRow{
+    background-color: #367bed;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    font-family: sans-serif;
+    color: white;
+    background-color: rgba(52, 58, 64);
+    padding: 10px;
+    width: 100%;
+}

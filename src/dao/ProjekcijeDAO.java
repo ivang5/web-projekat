@@ -65,7 +65,7 @@ public class ProjekcijeDAO {
 		try {
 			
 			String query = "SELECT id, film, tipProjekcije, sala, datumVreme, cenaKarte, korisnik, obrisana "
-					+ "FROM projekcije WHERE film LIKE ? AND tipProjekcije = ? AND sala LIKE ? AND datumVreme >= ? AND datumVreme <= ? AND cenaKarte >= ? AND cenaKarte <= ? AND obrisana = ?";
+					+ "FROM projekcije WHERE film LIKE ? AND tipProjekcije LIKE ? AND sala LIKE ? AND datumVreme >= ? AND datumVreme <= ? AND cenaKarte >= ? AND cenaKarte <= ? AND obrisana = ?";
 			
 			int index = 1;
 			pstmt = conn.prepareStatement(query);
@@ -74,7 +74,11 @@ public class ProjekcijeDAO {
 			}else {
 				pstmt.setString(index++, "%" + film + "%");
 			}
-			pstmt.setString(index++, tipProjekcije);
+			if(tipProjekcije == "") {
+				pstmt.setString(index++, "%" + "%");
+			}else {
+				pstmt.setString(index++, tipProjekcije);
+			}
 			if(sala == -1) {
 				pstmt.setString(index++, "%" + "%");
 			}else {
@@ -128,7 +132,7 @@ public class ProjekcijeDAO {
 			pstmt.setInt(index++, projekcija.getFilm().getId());
 			pstmt.setString(index++, projekcija.getTipProjekcije().toString());
 			pstmt.setInt(index++, projekcija.getSala().getId());
-			pstmt.setTimestamp(index++, new Timestamp(projekcija.getDatumVreme().getTime()));
+			pstmt.setTimestamp(index++,  new Timestamp(projekcija.getDatumVreme().getTime()));
 			pstmt.setDouble(index++, projekcija.getCenaKarte());
 			pstmt.setInt(index++, projekcija.getKorisnik().getId());
 			pstmt.setInt(index++, (projekcija.isObrisana() == true? 1:0));
@@ -189,6 +193,38 @@ public class ProjekcijeDAO {
 			pstmt.setString(1, id);
 
 			return pstmt.executeUpdate() == 1;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		
+		return false;
+	}
+	
+	public static boolean postojanjeFilma(String id) {
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			String query = "SELECT COUNT(*) from projekcije WHERE film = ?";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				int brojProjekcija = rset.getInt(1);
+				if(brojProjekcija > 0) 
+					return true;
+				else
+					return false;
+			}
+			
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
