@@ -87,10 +87,6 @@ $(document).ready(function(){
     		'tipProjekcijeFilter' : tipProjekcijeFilter,
     	};
     	
-    	var probaDatum = new Date("11/21/1987 16:00:00");
-    	var probaMS = probaDatum.getTime();
-    	console.log(probaMS);
-    	
     	console.log(params);
     	$.get('ProjekcijaServlet', params, function(data){
     		if (data.status == 'success') {

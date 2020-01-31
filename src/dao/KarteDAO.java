@@ -125,6 +125,43 @@ public class KarteDAO {
 		return karte;
 	}
 	
+	public static List<Karta> getProjekcijaKarte(String projekcijaId){
+		List<Karta> karte = new ArrayList<>();
+		
+		Connection conn = ConnectionManager.getConnection();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT id, sediste, datumVremeProdaje, korisnik "
+					+ "FROM karte WHERE projekcija = ?";
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, projekcijaId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int index = 1;
+				int id = rset.getInt(index++);
+				Sediste sediste = SedistaDAO.getById(rset.getString(index++));
+				Timestamp dateTime = rset.getTimestamp(index++);
+				Date datumVremeProdaje = new Date(dateTime.getTime());
+				Korisnik kupac = KorisniciDAO.getById(rset.getString(index++));
+				
+				Karta karta =  new Karta(id, ProjekcijeDAO.getById(projekcijaId), sediste, datumVremeProdaje, kupac);
+				karte.add(karta);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		}
+		
+		return karte;
+	}
+	
 	public static boolean add(Karta karta) {
 		Connection conn = ConnectionManager.getConnection();
 

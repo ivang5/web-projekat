@@ -27,13 +27,25 @@ public class KartaServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String korisnikID = request.getParameter("korisnikID");
-		List<Karta> filtriraneKarte = KarteDAO.getKorisnikKarte(korisnikID);
-		
-		Map<String, Object> data = new LinkedHashMap<>();
-		data.put("filtriraneKarte", filtriraneKarte);
-		
-		request.setAttribute("data", data);
-		request.getRequestDispatcher("./SuccessServlet").forward(request, response);
+		if(korisnikID != null && korisnikID != "") {
+			List<Karta> filtriraneKarte = KarteDAO.getKorisnikKarte(korisnikID);
+			
+			Map<String, Object> data = new LinkedHashMap<>();
+			data.put("filtriraneKarte", filtriraneKarte);
+			
+			request.setAttribute("data", data);
+			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
+		}
+		String projekcijaID = request.getParameter("projekcijaID");
+		if(projekcijaID != null && projekcijaID != "") {
+			List<Karta> filtriraneKarte = KarteDAO.getProjekcijaKarte(projekcijaID);
+			
+			Map<String, Object> data = new LinkedHashMap<>();
+			data.put("filtriraneKarte", filtriraneKarte);
+			
+			request.setAttribute("data", data);
+			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

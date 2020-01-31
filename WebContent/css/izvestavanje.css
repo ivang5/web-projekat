@@ -1,5 +1,5 @@
 #slika {
-	background-image: url('https://www.trovaweb.net/images/immagini-schede/banner-cinema-trovaweb.jpg');
+	background-image: url('http://www.jashfilm.com/template/1/jashfilm/_files/img/mark/dongtai.jpg');
 	background-size: cover;
     background-repeat: no-repeat;
     height:260px;
@@ -34,13 +34,7 @@ a {
   width: max-content;
 }
 
-#zanrInput{width:150px;}
-#trajanjeOdInput{width:120px;}
-#trajanjeDoInput{width:120px;}
-#godinaOdInput{width:115px;}
-#godinaDoInput{width:115px;}
-
-section{
+section {
     color: white;
     font-family: sans-serif;
     background: linear-gradient(
@@ -55,7 +49,7 @@ section{
     text-align: center;
 }
 
-#naslov{
+#naslov {
     margin-top: 8vh;
     color: white;
     font-weight: 600;
@@ -65,22 +59,7 @@ section{
     margin-bottom: 10vh;
 }
 
-#pretragaDugme{
-    color: rgba(255, 255, 255, 0.60);
-    font-family: sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-    position: absolute;
-    cursor:pointer;
-    user-select: none;
-}
-
-#pretragaDugme:hover{
-    color: white;
-}
-
-#pretraga{
-    display: none;
+#pretraga {
     margin-top: 7vh;
     padding: 10px;
     border-radius: 10px;
@@ -88,7 +67,7 @@ section{
     float: left;
 }
 
-#searchDugme{
+#searchDugme {
     background-color: #343a40;
     border: none;
     color: white;
@@ -96,15 +75,15 @@ section{
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 5px;
+    margin-left: 10px;
 }
 
-#noviFilm {
-	background: #f16268;
-	color: white;
-	font-size: 20px;
-	float: right;
+#datumDoInput {
+	margin-left: 10px;
 }
+
+#nf{width:450px;}
+#ucpk{width:250px;}
 
 .my-custom-scrollbar {
     float: left;
@@ -118,11 +97,11 @@ section{
     display: block;
 }
 
-#tabelaFilmova{
+#tabelaIzvestavanja{
     background-color: #343a40;
 }
 
-#zaglavljeTabeleFilmova{
+#zaglavljeTabeleIzvestavanja{
     background: #f16268;
     color: white;
 }

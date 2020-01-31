@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Izvestavanje</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Izveštavanje</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="css/izvestavanje.css" rel="stylesheet">
+    <script src="js/izvestavanje.js"></script>
 </head>
 <body>
-
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a id="logoLink" class="navbar-brand" href="index.html"><img src="img/logo.png">   Film Plus</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <ul id="navigationButtons" class="navbar-nav mr-auto">
+        	<li class="margina"><a class="nav-link" href="filmovi.html">Filmovi</a></li>
+        </ul>
+    </nav>
+	<div id="slika">
+	    <div id="blurry">
+	   		<h1 id="naslovSlika" class="display-4">Pogledajte izveštaj</h1>
+	   		<p id="tekstSlika" class="lead">Unesite željeni opseg datuma</p>
+		</div>
+	</div>
+    <section id="mySection">
+        <h1 id="naslov">Izveštavanje</h1>
+        <span id="pretraga" class="form-inline">
+			<input id="datumOdInput" class="form-control" type="text" placeholder="Datum od"  onfocus="(this.type='date')" onblur="(this.type='text')">
+			<input id="datumDoInput" class="form-control" type="text" placeholder="Datum do"  onfocus="(this.type='date')" onblur="(this.type='text')">
+        	<button id="searchDugme"><i class="fa fa-search"></i> Pretraga</button>
+        </span>
+        <div id="tableScroll" class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table id="tabelaIzvestavanja" class="table table-striped table-dark">
+                <thead id="zaglavljeTabeleIzvestavanja">
+                <tr>
+                    <th id="nf" scope="col" class="text-left">naziv filma</th>
+                    <th scope="col" class="text-left">broj projekcija</th>
+                    <th scope="col" class="text-left">broj prodatih karata</th>
+                    <th id="ucpk" scope="col" class="text-left">ukupna cena prodatih karata</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+    <footer>
+        Copyright &copy; 2019 Film Plus
+    </footer>
 </body>
 </html>
