@@ -194,7 +194,7 @@ public class KarteDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String query = "DELETE FROM projekcije WHERE id = ?";
+			String query = "DELETE FROM karte WHERE id = ?";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);

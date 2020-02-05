@@ -19,32 +19,41 @@ import model.Karta;
 import model.Korisnik;
 import model.Projekcija;
 import model.Sediste;
-import model.Uloga;
 
 public class KartaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String korisnikID = request.getParameter("korisnikID");
-		if(korisnikID != null && korisnikID != "") {
-			List<Karta> filtriraneKarte = KarteDAO.getKorisnikKarte(korisnikID);
-			
+		String kartaID = request.getParameter("kartaID");
+		if(kartaID != null && kartaID != "") {
 			Map<String, Object> data = new LinkedHashMap<>();
-			data.put("filtriraneKarte", filtriraneKarte);
+			data.put("trazenaKarta", KarteDAO.get(kartaID));
 			
 			request.setAttribute("data", data);
 			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
-		}
-		String projekcijaID = request.getParameter("projekcijaID");
-		if(projekcijaID != null && projekcijaID != "") {
-			List<Karta> filtriraneKarte = KarteDAO.getProjekcijaKarte(projekcijaID);
+		}else{
+			String korisnikID = request.getParameter("korisnikID");
+			if(korisnikID != null && korisnikID != "") {
+				List<Karta> filtriraneKarte = KarteDAO.getKorisnikKarte(korisnikID);
+				
+				Map<String, Object> data = new LinkedHashMap<>();
+				data.put("filtriraneKarte", filtriraneKarte);
+				
+				request.setAttribute("data", data);
+				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
+			}
 			
-			Map<String, Object> data = new LinkedHashMap<>();
-			data.put("filtriraneKarte", filtriraneKarte);
-			
-			request.setAttribute("data", data);
-			request.getRequestDispatcher("./SuccessServlet").forward(request, response);
+			String projekcijaID = request.getParameter("projekcijaID");
+			if(projekcijaID != null && projekcijaID != "") {
+				List<Karta> filtriraneKarte = KarteDAO.getProjekcijaKarte(projekcijaID);
+				
+				Map<String, Object> data = new LinkedHashMap<>();
+				data.put("filtriraneKarte", filtriraneKarte);
+				
+				request.setAttribute("data", data);
+				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
+			}
 		}
 	}
 
@@ -61,19 +70,20 @@ public class KartaServlet extends HttpServlet {
 			return;
 		}
 		
-		if (loggedInUser.getUloga() != Uloga.KORISNIK || loggedInUser.isObrisan() == true) {
-			request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-			return;
-		}
-		
 		try {
 			String action = request.getParameter("action");
 			switch (action) {
 			case "add": {
 				String projekcijaString = request.getParameter("projekcijaID");
 				Projekcija projekcija = ProjekcijeDAO.getById(projekcijaString);
+				if (projekcija == null)
+					throw new Exception("Uneta projekcija je nepostojeca!");
+				if (projekcija.getDatumVreme().getTime() < System.currentTimeMillis())
+					throw new Exception("Greska, projekcija je u proslosti!");
 				String sedisteString = request.getParameter("sediste");
 				Sediste sediste = SedistaDAO.getById(sedisteString);
+				if (sediste == null)
+					throw new Exception("Uneto sediste je nepostojece!");
 				Date datumVremeProdaje = new Date();
 				Korisnik korisnik = KorisniciDAO.get(loggedInUserName);
 				
@@ -95,7 +105,7 @@ public class KartaServlet extends HttpServlet {
 					request.getRequestDispatcher("./SuccessServlet").forward(request, response);
 					break;
 				}else {
-					request.getRequestDispatcher("./FailureServlet").forward(request, response);
+					throw new Exception("Greska, projekcija je u proslosti!");
 				}
 			}
 			}

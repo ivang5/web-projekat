@@ -68,7 +68,6 @@ $(document).ready(function(){
 	    		  if(data.loggedInUserRole == 'ADMINISTRATOR'){
 	    			  navigationButtons.append(btnKorisnici);
 	    			  navigationButtons.append(btnIzvestavanje);
-	    			  filmButtons.append(btnObrisiFilm);
 	    			  filmButtons.append(btnIzmeniFilm);
 	    			  
 		    		  document.getElementById('inputNaziv').readOnly = false;

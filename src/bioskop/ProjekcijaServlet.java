@@ -122,13 +122,25 @@ public class ProjekcijaServlet extends HttpServlet {
 			case "add": {
 				String filmString = request.getParameter("film");
 				Film film = FIlmoviDAO.get(filmString);
+				if (film == null)
+					throw new Exception("Uneti film je nepostojec!");
 				TipProjekcije tipProjekcije = TipProjekcije.valueOf(request.getParameter("tipProjekcije"));
+				if (tipProjekcije == null)
+					throw new Exception("Uneti tip projekcije je nepostojec!");
 				String salaString = request.getParameter("sala");
 				Sala sala = SaleDAO.get(salaString);
+				if (sala == null)
+					throw new Exception("Uneta sala je nepostojeca!");
 				String datumVremeString = request.getParameter("datumVreme");
 				Date datumVreme = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(datumVremeString);
+				if (datumVreme == null)
+					throw new Exception("Datum i vreme nisu uneti!");
 				double cenaKarte = Double.parseDouble(request.getParameter("cenaKarte"));
+				if (cenaKarte <= 0)
+					throw new Exception("Cena mora biti broj veci od 0!");
 				Korisnik korisnik = KorisniciDAO.get(loggedInUserName);
+				if (korisnik == null)
+					throw new Exception("Uneti korisnik je nepostojec!");
 				
 				Projekcija projekcija = new Projekcija();
 				projekcija.setFilm(film);

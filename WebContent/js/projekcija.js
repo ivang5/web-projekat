@@ -8,15 +8,19 @@ $(document).ready(function(){
     var projekcijaButtons = $('#projekcijaButtons');
     var btnKupiKartu;
     
+    var tabelaKarata = $('#tabelaKarata');
+    
 	//Navigacija
     var navigationButtons = $('#navigationButtons');
     var btnOdjava;
     var btnMojNalog;
     var btnKorisnici;
     var btnIzvestavanje;
+    
     makeButtons();
     changeInterface();
     getProjekcija();
+	getKarte();
     
     
     function changeInterface() {
@@ -30,6 +34,7 @@ $(document).ready(function(){
 	    		  $('#btnKorisnici').remove();
 	    		  $('#btnIzvestavanje').remove();
 	    		  $('#btnObrisiProjekciju').remove();
+	    		  $('#sekcija').remove();
 	    	  }
 	    	  
 	    	  loggedInUserRole = data.loggedInUserRole;
@@ -41,6 +46,7 @@ $(document).ready(function(){
 	    		  if(data.loggedInUserRole == 'KORISNIK'){
 	    			  projekcijaButtons.append(btnKupiKartu);
 	    			  $('#btnObrisiProjekciju').remove();
+	    			  $('#sekcija').remove();
 	    		  }
 	           
 	    		  if(data.loggedInUserRole == 'ADMINISTRATOR'){
@@ -134,6 +140,30 @@ $(document).ready(function(){
             });
 		}
     });
+    
+    function getKarte(){
+    	var params = {
+    		'projekcijaID' : projekcijaID
+    	};
+    	
+    	$.get('KartaServlet', params, function(data){
+    		if (data.status == 'success') {
+    			tabelaKarata.find('tbody').remove();
+    			
+    		    var filtriraneKarte = data.filtriraneKarte;
+    			for(fk in filtriraneKarte) {
+    				tabelaKarata.append(
+						'<tbody>' +
+			                '<tr>' + 
+			                  '<td align="left"><a href="karta.html?id=' + filtriraneKarte[fk].id + '">' + dateFormat(new Date(filtriraneKarte[fk].datumVremeProdaje)) + '</a></td>' +
+			                  '<td align="left"><a href="profil.html?id=' + filtriraneKarte[fk].korisnik.id + '">' + filtriraneKarte[fk].korisnik.korisnickoIme + '</a></td>' +
+			                '</tr>' +
+		                '</tbody>'		
+    				)
+    			}
+    		}
+    	});
+    }
     
     $('#loginSubmit').on('click', function(event) {
     	var loginInputUsername = $('#loginInputUsername');

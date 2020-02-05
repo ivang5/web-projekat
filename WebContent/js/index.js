@@ -45,6 +45,7 @@ $(document).ready(function(){
     makeButtons();
     changeInterface();
     getProjekcije();
+    getSale();
     
     
     function getProjekcije() {
@@ -178,6 +179,25 @@ $(document).ready(function(){
         btnDodajProjekciju = $('<button type="button" id="novaProjekcija" class="btn btn-light">Dodaj projekciju</button>').on('click', function(){
         	window.location.replace('dodajProjekciju.html');
         });
+    }
+    
+    function getSale() {  	
+    	var params = {
+    		'tipProjekcijeFilter' : "",
+    	};
+    	
+    	$.get('SalaServlet', params, function(data){
+    		if (data.status == 'success') {
+    			var filtriraneSale = data.filtriraneSale;
+    			for(fs in filtriraneSale) {
+    				optionText = filtriraneSale[fs].naziv;
+    	            optionValue = filtriraneSale[fs].naziv;
+    				$('#salaInput').append(`<option value="${optionValue}"> 
+                            ${optionText} 
+                            </option>`);
+    			}
+    		}
+    	});
     }
     
     $('#loginSubmit').on('click', function(event) {

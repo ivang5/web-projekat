@@ -58,6 +58,36 @@ section{
     text-align: center;
 }
 
+#naslov{
+    margin-top: 8vh;
+    color: white;
+    font-weight: 600;
+    font-size: 50px;
+    font-family: sans-serif;
+    background-color: none;
+    margin-bottom: 10vh;
+}
+
+.my-custom-scrollbar {
+    float: left;
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+    margin-top: 5vh;
+    }
+.table-wrapper-scroll-y {
+    display: block;
+    }
+
+#tabelaKarata{
+    background-color: #343a40;
+}
+
+#zaglavljeTabeleKarata{
+    background: #f16268;
+    color: white;
+}
+
 footer {
     text-align: center;
     font-family: sans-serif;

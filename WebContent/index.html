@@ -89,14 +89,16 @@
     </div>
     <section id="mySection">
         <h1 id="naslov">Raspoložive projekcije</h1>
-        <p id="pretragaDugme" onclick="this.blur();">pretraga &#8681</p></br>
+        <p id="pretragaDugme" onclick="this.blur();">pretraga &#8681</p><br>
         <span id="pretraga" class="form-inline">
             <input id="filmInput" class="form-control" type="text" placeholder="film">
             <input id="datumOdInput" class="form-control" type="text" placeholder="od"  onfocus="(this.type='date')" onblur="(this.type='text')">
             <input id="vremeOdInput" class="form-control" type="time" placeholder="od">
             <input id="datumDoInput" class="form-control" type="text" placeholder="do"  onfocus="(this.type='date')" onblur="(this.type='text')">
             <input id="vremeDoInput" class="form-control" type="time" placeholder="do">
-            <input id="salaInput" class="form-control" type="text" placeholder="sala">
+            <select id="salaInput" class="form-control">
+            	<option value="" selected>Sala</option>
+            </select>
             <input id="minCenaInput" class="form-control" type="number" min="200" max="1500" placeholder="cena od">
             <input id="maxCenaInput" class="form-control" type="number" min="200" max="1500" placeholder="cena do">
             <select id="tipProjekcije" class="form-control">

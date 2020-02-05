@@ -97,7 +97,11 @@ public class SaleDAO {
 			
 			int index = 1;
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(index++, "%" + tipProjekcije + "%");
+			if ("".equals(tipProjekcije)) {
+				pstmt.setString(index++, "%" + "%");
+			}else {
+				pstmt.setString(index++, "%" + tipProjekcije + "%");
+			}
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {

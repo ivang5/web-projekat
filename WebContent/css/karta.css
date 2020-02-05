@@ -1,5 +1,5 @@
 html,body {
- 	background-image: url("https://spheracinema.com/sites/default/files/styles/large_image/public/24011746467_e64060c7f3_o.jpg?itok=zw3GzRy1");
+ 	background-image: url("https://megagames.com/sites/default/files/game-images/TCINEMAROSA.jpg");
   	background-size: cover;
   	background-repeat: no-repeat;
 }
@@ -7,7 +7,7 @@ html,body {
 #myContainer {
     background: rgba(0,0,0,0.7);
     margin-top: 70px;
-    height: 900px;
+    height: 680px;
     width: 370px;
     margin-bottom: 100px;
 }

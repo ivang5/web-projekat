@@ -91,13 +91,23 @@ public class FilmServlet extends HttpServlet {
 			switch (action) {
 			case "add": {
 				String naziv = request.getParameter("naziv");
+				if ("".equals(naziv))
+					throw new Exception("Naziv filma nije unet!");
 				String reziser = request.getParameter("reziser");
 				String glumci = request.getParameter("glumci");
 				String zanrovi = request.getParameter("zanrovi");
 				int trajanje = Integer.parseInt(request.getParameter("trajanje"));
+				if (trajanje <= 0)
+					throw new Exception("Trajanje mora biti broj veci od 0!");
 				String distributer = request.getParameter("distributer");
+				if ("".equals(distributer))
+					throw new Exception("Distributer nije unet!");
 				String zemljaPorekla = request.getParameter("zemljaPorekla");
+				if ("".equals(zemljaPorekla))
+					throw new Exception("Zemlja porekla nije uneta!");
 				int godinaProizvodnje = Integer.parseInt(request.getParameter("godinaProizvodnje"));
+				if (godinaProizvodnje <= 0)
+					throw new Exception("Godina proizvodnje mora biti broj veci od 0!");
 				String opis = request.getParameter("opis");
 				
 				Film film = new Film();
@@ -118,15 +128,27 @@ public class FilmServlet extends HttpServlet {
 			} case "update": {
 				String id = request.getParameter("id");
 				Film film = FIlmoviDAO.getById(id);
+				if (film == null)
+					throw new Exception("Film je nepostojec!");
 				
 				String naziv = request.getParameter("naziv");
+				if ("".equals(naziv))
+					throw new Exception("Naziv filma nije unet!");
 				String reziser = request.getParameter("reziser");
 				String glumci = request.getParameter("glumci");
 				String zanrovi = request.getParameter("zanrovi");
 				int trajanje = Integer.parseInt(request.getParameter("trajanje"));
+				if (trajanje <= 0)
+					throw new Exception("Trajanje mora biti broj veci od 0!");
 				String distributer = request.getParameter("distributer");
+				if ("".equals(naziv))
+					throw new Exception("Distributer nije unet!");
 				String zemljaPorekla = request.getParameter("zemljaPorekla");
+				if ("".equals(naziv))
+					throw new Exception("Zemlja porekla nije uneta!");
 				int godinaProizvodnje = Integer.parseInt(request.getParameter("godinaProizvodnje"));
+				if (godinaProizvodnje <= 0)
+					throw new Exception("Godina proizvodnje mora biti broj veci od 0!");
 				String opis = request.getParameter("opis");
 				
 				film.setNaziv(naziv);

@@ -14,9 +14,6 @@ import dao.KorisniciDAO;
 import model.Korisnik;
 import model.Uloga;
 
-/**
- * Servlet implementation class RegistrationServlet
- */
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -30,12 +27,15 @@ public class RegistrationServlet extends HttpServlet {
 			if (KorisniciDAO.get(korisnickoIme) != null)
 				throw new Exception("Korisnicko ime vec postoji!");
 			if ("".equals(korisnickoIme))
-				throw new Exception("Korisnicko ime je prazno!");
+				throw new Exception("Korisnicko ime nije uneto!");
+			if (!korisnickoIme.matches("[A-Za-z0-9]+"))
+				throw new Exception("Korisnicko ime nije validno!");
 
 			String loznika = request.getParameter("password");
 			if ("".equals(loznika))
-				throw new Exception("Lozinka je prazna!");
-			
+				throw new Exception("Lozinka nije uneta!");
+			if (!loznika.matches("[A-Za-z0-9]+"))
+				throw new Exception("Lozinka nije validna!");
 			Date datumRegistracije = new Date();
 			Uloga uloga = Uloga.KORISNIK;
 			

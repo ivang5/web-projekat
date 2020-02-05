@@ -1,7 +1,6 @@
 package bioskop;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -87,43 +86,34 @@ public class UserServlet extends HttpServlet {
 		try {
 			String action = request.getParameter("action");
 			switch (action) {
-			case "add": {
-				if (loggedInUser.getUloga() != Uloga.ADMINISTRATOR) {
-					request.getRequestDispatcher("./LogoutServlet").forward(request, response);
-					return;
-				}
-				String korisnickoIme = request.getParameter("korisnickoIme");
-				String lozinka = request.getParameter("lozinka");
-				Date datumRegistracije = new Date();
-				Uloga uloga = Uloga.KORISNIK;
-				
-				Korisnik korisnik = new Korisnik();
-				korisnik.setKorisnickoIme(korisnickoIme);
-				korisnik.setLozinka(lozinka);
-				korisnik.setDatumRegistracije(datumRegistracije);
-				korisnik.setUloga(uloga);
-				korisnik.setObrisan(false);
-				
-				KorisniciDAO.add(korisnik);
-				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
-				break;
-			}case "update": {
+			case "update": {
 				String id = request.getParameter("id");
 				Korisnik korisnik = KorisniciDAO.getById(id);
+				if (korisnik == null)
+					throw new Exception("Korisnik je nepostojec!");
+				
 				String korisnickoIme = request.getParameter("korisnickoIme");
-				if(korisnickoIme != null && korisnickoIme != "")
-					korisnik.setKorisnickoIme(korisnickoIme);
+				if (KorisniciDAO.get(korisnickoIme) != null)
+					throw new Exception("Korisnicko ime vec postoji!");
+				if("".equals(korisnickoIme))
+					throw new Exception("Korisnicko ime nije uneto!");
+				if (!korisnickoIme.matches("[A-Za-z0-9]+"))
+					throw new Exception("Korisnicko ime nije validno!");
+				korisnik.setKorisnickoIme(korisnickoIme);
 				String lozinka = request.getParameter("lozinka");
-				if(lozinka != null && lozinka != "") {
-					String staraLozinka = request.getParameter("staraLozinka");
-					if(staraLozinka.equals(korisnik.getLozinka())) {
-						korisnik.setLozinka(lozinka);
-					}else {
-						request.getRequestDispatcher("./FailureServlet").forward(request, response);
-						return;
-					}
+				if("".equals(lozinka))
+					throw new Exception("Lozinka nije uneta!");
+				if (!lozinka.matches("[A-Za-z0-9]+"))
+					throw new Exception("Lozinka nije validna!");
+				String staraLozinka = request.getParameter("staraLozinka");
+				if(staraLozinka.equals(korisnik.getLozinka())) {
+					korisnik.setLozinka(lozinka);
+				}else {
+					throw new Exception("Stara lozinka nije ispravna!");
 				}
 				Uloga uloga = Uloga.valueOf(request.getParameter("uloga"));
+				if (uloga == null)
+					throw new Exception("Uloga je nepostojeca!");
 				korisnik.setUloga(uloga);
 				KorisniciDAO.update(korisnik);
 				request.getRequestDispatcher("./SuccessServlet").forward(request, response);
