@@ -217,6 +217,9 @@ $(document).ready(function(){
                 }
                 if(loggedInUserRole == 'ADMINISTRATOR'){
                 	cbRole.val(KORISNIK.uloga).trigger("change");
+                	if (KORISNIK.uloga == 'ADMINISTRATOR') {
+                		$('#mySection').hide();
+                	}
                     console.log(cbRole.val);
                 }         
             }
